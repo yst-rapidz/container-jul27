@@ -37,4 +37,19 @@ spec:
               - secretRef:
                   name: nw-secret
               ports:
-              - containerPort: 3306
+              - name: nwdb-port
+                containerPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: nwdb-svc
+    labels:
+        app: northwind
+spec:
+    type: ClusterIP
+    selector:
+        app: northwind
+    ports:
+    - port: 3306
+      targetPort: nwdb-port     # if excluded, targetPort will be same as port
