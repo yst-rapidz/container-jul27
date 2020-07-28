@@ -7,7 +7,7 @@ metadata:
         app: northwind
 data:
     DB_USER: root
-    DB_HOST: nwdb-svc.nwns.svc.cluster.local    # FQDN
+    DB_HOST: nwdb-svc.nwns.svc.cluster.local     # FQDN
 ---
 apiVersion: apps/v1
 kind: Deployment
