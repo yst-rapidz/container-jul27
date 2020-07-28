@@ -1,0 +1,40 @@
+---
+# Secrets, for db user + password
+apiVersion: v1
+kind: Secret
+metadata:
+    name: nw-secret
+    labels:
+        app: northwind
+data:
+    MYSQL_ROOT_PASSWORD: Y2hhbmdlaXQ=       # base64 encoded
+
+---
+# deployment for Northwind DB
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: nwdb-deploy
+    namespace: nwns
+    labels:
+        app: northwind
+spec:
+    replicas: 1  # stateful, database, use another way to deploy read-only replicas
+    selector:
+        matchLabels:
+            app: northwind
+    template:
+        metadata:
+            name: nwdb-pod
+            labels:
+                app: northwind
+        spec:
+            containers:
+            - name: nwdb-container
+              image: chukmunnlee/my-nwdb:v3
+              imagePullPolicy: IfNotPresent
+              envFrom:
+              - secretRef:
+                  name: nw-secret
+              ports:
+              - containerPort: 3306
