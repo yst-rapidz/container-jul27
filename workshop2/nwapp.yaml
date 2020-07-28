@@ -61,4 +61,4 @@ spec:
  ports:
  - name: nwapp-svc-port
    port: 80
-   targetPort: 3000
+   targetPort: nwapp-port
